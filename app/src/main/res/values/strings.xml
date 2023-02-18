@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Gamer MVVM App</string>
+    <string name="content_description_control_xbox_icon_login">Control de xbox 360</string>
+</resources>
