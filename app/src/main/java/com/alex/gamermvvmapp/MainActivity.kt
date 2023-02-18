@@ -22,8 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GamerMVVMAppTheme {
-                // A surface container using the 'background' color from the theme
+            GamerMVVMAppTheme(darkTheme = true) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -112,7 +111,12 @@ fun Greeting(name: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    GamerMVVMAppTheme {
-        BodyContent()
+    GamerMVVMAppTheme(darkTheme = true) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            BodyContent()
+        }
     }
 }
