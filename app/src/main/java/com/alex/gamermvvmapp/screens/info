@@ -1,0 +1,9 @@
+En este paquete van las pantallas diseñadas con compose
+
+LoginScreen solo se muestra fragmentos de vistas o los componentes que conforman la pantalla, pero aqui no se
+declaran los componentes de forma indirecta ya que no es una buena practica
+
+El paquete components contienen los componentes declarados pero definiendolos en diferentes archivos
+ya que representa un conjunto de componentes para cierta parte de la pantalla, es decir un archivo
+esta definido el contenido central de la pantalla, otro archivo esta definidos los componentes de la parte inferior de la pantalla
+y asi sucesivamente.
