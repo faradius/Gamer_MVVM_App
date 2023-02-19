@@ -23,12 +23,14 @@ fun DefaultButtom(
     text: String,
     onClick: ()->Unit,
     color: Color = Red500,
-    icon: ImageVector = Icons.Default.ArrowForward
+    icon: ImageVector = Icons.Default.ArrowForward,
+    enabled: Boolean = true
 ){
     Button(
         modifier = modifier,
         onClick = { onClick() },
-        colors = ButtonDefaults.buttonColors(backgroundColor = color)
+        colors = ButtonDefaults.buttonColors(backgroundColor = color),
+        enabled = enabled
     ) {
         Icon(
             imageVector = icon,

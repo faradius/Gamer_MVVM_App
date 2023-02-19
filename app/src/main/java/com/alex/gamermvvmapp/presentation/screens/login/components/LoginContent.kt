@@ -87,7 +87,11 @@ fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel = hiltVi
                     onValueChange = { viewModel.email.value = it},
                     label = "Correo Electrónico",
                     icon = Icons.Default.Email,
-                    keyboardType = KeyboardType.Email
+                    keyboardType = KeyboardType.Email,
+                    errorMsg = viewModel.emailErrorMsg.value,
+                    validateField = {
+                        viewModel.validateEmail()
+                    }
                 )
 
                 DefaultTextField(
@@ -96,7 +100,11 @@ fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel = hiltVi
                     onValueChange = { viewModel.password.value = it},
                     label = "Contraseña",
                     icon = Icons.Default.Lock,
-                    hideText = true
+                    hideText = true,
+                    errorMsg = viewModel.passwordErrorMsg.value,
+                    validateField = {
+                        viewModel.validatePassword()
+                    }
                 )
 
                 DefaultButtom(
@@ -107,7 +115,8 @@ fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel = hiltVi
                     onClick = {
                         Log.d("LoginContent", "Email: ${viewModel.email.value}")
                         Log.d("LoginContent", "Password: ${viewModel.password.value}")
-                    }
+                    },
+                    enabled = viewModel.isEnabledLoginButton
                 )
             }
         }
