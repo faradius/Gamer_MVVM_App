@@ -14,12 +14,15 @@ import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 //En el screen no se colocan los componentes de forma directa
 @Composable
 fun LoginScreen(navController: NavHostController) {
+
+    val viewModel = LoginViewModel()
+
     //Es recomendable tener este componente como primera instancia o el componente principal Scaffold y no una columna (Column)
     //Scaffold es como el cordinator layout
     Scaffold(
         topBar = {},
         content = {
-            LoginContent(it)
+            LoginContent(it, viewModel)
         },
         bottomBar = {
             LoginBottomBar(navController)
