@@ -1,4 +1,4 @@
-package com.alex.gamermvvmapp.ui.theme
+package com.alex.gamermvvmapp.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

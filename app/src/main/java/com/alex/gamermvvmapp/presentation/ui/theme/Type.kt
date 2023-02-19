@@ -1,4 +1,4 @@
-package com.alex.gamermvvmapp.ui.theme
+package com.alex.gamermvvmapp.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

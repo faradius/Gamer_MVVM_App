@@ -1,13 +1,13 @@
-package com.alex.gamermvvmapp.screens.login
+package com.alex.gamermvvmapp.presentation.screens.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.alex.gamermvvmapp.screens.login.components.LoginBottomBar
-import com.alex.gamermvvmapp.screens.login.components.LoginContent
-import com.alex.gamermvvmapp.ui.theme.GamerMVVMAppTheme
+import com.alex.gamermvvmapp.presentation.screens.login.components.LoginBottomBar
+import com.alex.gamermvvmapp.presentation.screens.login.components.LoginContent
+import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
 //En el screen no se colocan los componentes de forma directa
 @Composable

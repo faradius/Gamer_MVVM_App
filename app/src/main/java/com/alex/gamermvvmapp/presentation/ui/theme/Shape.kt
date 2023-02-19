@@ -1,4 +1,4 @@
-package com.alex.gamermvvmapp.ui.theme
+package com.alex.gamermvvmapp.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

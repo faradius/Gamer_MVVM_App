@@ -1,4 +1,4 @@
-package com.alex.gamermvvmapp.screens.login.components
+package com.alex.gamermvvmapp.presentation.screens.login.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
