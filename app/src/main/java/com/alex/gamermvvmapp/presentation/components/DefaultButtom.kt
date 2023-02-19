@@ -19,15 +19,14 @@ import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
 fun DefaultButtom(
+    modifier: Modifier,
     text: String,
     onClick: ()->Unit,
     color: Color = Red500,
     icon: ImageVector = Icons.Default.ArrowForward
 ){
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 45.dp),
+        modifier = modifier,
         onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(backgroundColor = color)
     ) {

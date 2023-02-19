@@ -1,4 +1,4 @@
-package com.alex.gamermvvmapp.presentation.screens.login.components
+package com.alex.gamermvvmapp.presentation.screens.singup.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,6 +7,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -24,15 +26,16 @@ import com.alex.gamermvvmapp.R
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.components.DefaultTextField
 import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
+import com.alex.gamermvvmapp.presentation.screens.singup.SignUpScreen
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
-fun LoginContent(paddingValues: PaddingValues) {
+fun SignUpContent() {
     Box(
         modifier = Modifier
-            .padding(paddingValues = paddingValues)
+            //.padding()
             .fillMaxWidth()
     ) {
         BoxHeader()
@@ -45,7 +48,7 @@ fun BoxHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(280.dp)
+            .height(230.dp)
             .background(Red500)
     ){
         Column(
@@ -54,9 +57,9 @@ fun BoxHeader() {
         ) {
             Spacer(modifier = Modifier.height(30.dp))
             Image(
-                modifier = Modifier.height(130.dp),
-                painter = painterResource(id = R.drawable.control),
-                contentDescription = "Control de xbox 360"
+                modifier = Modifier.height(120.dp),
+                painter = painterResource(id = R.drawable.user),
+                contentDescription = "Imagen de usuario"
             )
         }
 
@@ -66,6 +69,10 @@ fun BoxHeader() {
 @Composable
 fun CardForm() {
 
+    var username by remember {
+        mutableStateOf("")
+    }
+
     var email by remember {
         mutableStateOf("")
     }
@@ -73,8 +80,12 @@ fun CardForm() {
         mutableStateOf("")
     }
 
+    var confirmPassword by remember {
+        mutableStateOf("")
+    }
+
     Card(
-        modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 200.dp),
+        modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 170.dp),
         backgroundColor = DarkGray500
     ) {
         Column(
@@ -82,7 +93,7 @@ fun CardForm() {
         ) {
             Text(
                 modifier = Modifier.padding(top = 40.dp),
-                text = "LOGIN",
+                text = "REGISTRO",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -90,13 +101,21 @@ fun CardForm() {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Por favor inicia sesión para continuar",
+                text = "Por favor ingresa estos datos para continuar",
                 fontSize = 12.sp,
                 color = Color.Gray
             )
 
             DefaultTextField(
                 modifier = Modifier.padding(top = 25.dp),
+                value = username,
+                onValueChange = { username = it},
+                label = "Nombre de Usuario",
+                icon = Icons.Default.Person
+            )
+
+            DefaultTextField(
+                modifier = Modifier.padding(top = 5.dp),
                 value = email,
                 onValueChange = { email = it},
                 label = "Correo Electrónico",
@@ -113,11 +132,20 @@ fun CardForm() {
                 hideText = true
             )
 
+            DefaultTextField(
+                modifier = Modifier.padding(top = 5.dp),
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it},
+                label = "Confirmar Contraseña",
+                icon = Icons.Outlined.Lock,
+                hideText = true
+            )
+
             DefaultButtom(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 45.dp),
-                text = "INICIAR SESIÓN",
+                    .padding(vertical = 25.dp),
+                text = "REGISTRARSE",
                 onClick = {  }
             )
         }
@@ -126,13 +154,13 @@ fun CardForm() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewLoginContent() {
+fun PreviewSignUpContent() {
     GamerMVVMAppTheme(darkTheme = true) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            LoginScreen(rememberNavController())
+            SignUpContent()
         }
     }
 }
