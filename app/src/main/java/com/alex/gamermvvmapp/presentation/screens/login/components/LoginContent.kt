@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.alex.gamermvvmapp.R
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
@@ -30,94 +31,85 @@ import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 
+//Con hiltViewModel() queda injectado
 @Composable
-fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel) {
+fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier
             .padding(paddingValues = paddingValues)
             .fillMaxWidth()
     ) {
-        BoxHeader()
-        CardForm(viewModel)
-    }
-}
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(280.dp)
+                .background(Red500)
+        ){
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(30.dp))
+                Image(
+                    modifier = Modifier.height(130.dp),
+                    painter = painterResource(id = R.drawable.control),
+                    contentDescription = "Control de xbox 360"
+                )
+            }
 
-@Composable
-fun BoxHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(280.dp)
-            .background(Red500)
-    ){
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(30.dp))
-            Image(
-                modifier = Modifier.height(130.dp),
-                painter = painterResource(id = R.drawable.control),
-                contentDescription = "Control de xbox 360"
-            )
         }
 
-    }
-}
-
-@Composable
-fun CardForm(viewModel: LoginViewModel) {
-
-    Card(
-        modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 200.dp),
-        backgroundColor = DarkGray500
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 20.dp)
+        Card(
+            modifier = Modifier.padding(start = 40.dp, end = 40.dp, top = 200.dp),
+            backgroundColor = DarkGray500
         ) {
-            Text(
-                modifier = Modifier.padding(top = 40.dp),
-                text = "LOGIN",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(top = 40.dp),
+                    text = "LOGIN",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
 
-            Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
-                text = "Por favor inicia sesión para continuar",
-                fontSize = 12.sp,
-                color = Color.Gray
-            )
+                Text(
+                    text = "Por favor inicia sesión para continuar",
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
 
-            DefaultTextField(
-                modifier = Modifier.padding(top = 25.dp),
-                value = viewModel.email.value,
-                onValueChange = { viewModel.email.value = it},
-                label = "Correo Electrónico",
-                icon = Icons.Default.Email,
-                keyboardType = KeyboardType.Email
-            )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 25.dp),
+                    value = viewModel.email.value,
+                    onValueChange = { viewModel.email.value = it},
+                    label = "Correo Electrónico",
+                    icon = Icons.Default.Email,
+                    keyboardType = KeyboardType.Email
+                )
 
-            DefaultTextField(
-                modifier = Modifier.padding(top = 5.dp),
-                value = viewModel.password.value,
-                onValueChange = { viewModel.password.value = it},
-                label = "Contraseña",
-                icon = Icons.Default.Lock,
-                hideText = true
-            )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 5.dp),
+                    value = viewModel.password.value,
+                    onValueChange = { viewModel.password.value = it},
+                    label = "Contraseña",
+                    icon = Icons.Default.Lock,
+                    hideText = true
+                )
 
-            DefaultButtom(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 45.dp),
-                text = "INICIAR SESIÓN",
-                onClick = {
-                    Log.d("LoginContent", "Email: ${viewModel.email.value}")
-                    Log.d("LoginContent", "Password: ${viewModel.password.value}")
-                }
-            )
+                DefaultButtom(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 45.dp),
+                    text = "INICIAR SESIÓN",
+                    onClick = {
+                        Log.d("LoginContent", "Email: ${viewModel.email.value}")
+                        Log.d("LoginContent", "Password: ${viewModel.password.value}")
+                    }
+                )
+            }
         }
     }
 }
