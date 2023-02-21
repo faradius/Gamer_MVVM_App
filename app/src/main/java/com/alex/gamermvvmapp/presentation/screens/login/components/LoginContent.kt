@@ -145,7 +145,12 @@ fun LoginContent(paddingValues: PaddingValues, navController: NavHostController,
                 //Esta corrutina es necesario por que se esta evaluando un estado en el loginFlow(loading, succes, failure),
                 //si se hace directo puede que el estado cambie y eso afectaria la navegación
                 LaunchedEffect(Unit){
-                    navController.navigate(route = AppScreen.Profile.route)
+                    navController.navigate(route = AppScreen.Profile.route){
+                        //Permite borrar el historial de pantallas
+                        popUpTo(AppScreen.Login.route){
+                            inclusive = true
+                        }
+                    }
                 }
             }
             is Response.Failure -> {
