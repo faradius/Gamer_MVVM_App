@@ -23,11 +23,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alex.gamermvvmapp.R
 import com.alex.gamermvvmapp.domain.model.Response
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.components.DefaultTextField
+import com.alex.gamermvvmapp.presentation.navigation.AppScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
@@ -36,7 +38,7 @@ import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 
 //Con hiltViewModel() queda injectado
 @Composable
-fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel = hiltViewModel()) {
+fun LoginContent(paddingValues: PaddingValues, navController: NavHostController,viewModel:LoginViewModel = hiltViewModel()) {
 
     val loginFlow = viewModel.loginFlow.collectAsState()
 
@@ -140,7 +142,11 @@ fun LoginContent(paddingValues: PaddingValues, viewModel:LoginViewModel = hiltVi
                 }
             }
             is Response.Success -> {
-                Toast.makeText(LocalContext.current, "Usuario Logeado", Toast.LENGTH_LONG).show()
+                //Esta corrutina es necesario por que se esta evaluando un estado en el loginFlow(loading, succes, failure),
+                //si se hace directo puede que el estado cambie y eso afectaria la navegación
+                LaunchedEffect(Unit){
+                    navController.navigate(route = AppScreen.Profile.route)
+                }
             }
             is Response.Failure -> {
                 Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()

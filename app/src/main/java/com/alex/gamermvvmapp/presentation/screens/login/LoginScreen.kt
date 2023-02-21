@@ -20,7 +20,7 @@ fun LoginScreen(navController: NavHostController) {
     Scaffold(
         topBar = {},
         content = {
-            LoginContent(it)
+            LoginContent(it, navController)
         },
         bottomBar = {
             LoginBottomBar(navController)
