@@ -1,5 +1,7 @@
 package com.alex.gamermvvmapp.presentation.screens.singup.components
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,10 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alex.gamermvvmapp.R
+import com.alex.gamermvvmapp.domain.model.Response
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.components.DefaultTextField
+import com.alex.gamermvvmapp.presentation.navigation.AppScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.alex.gamermvvmapp.presentation.screens.singup.SignUpScreen
@@ -35,7 +41,10 @@ import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
-fun SignUpContent(viewModel: SignUpViewModel = hiltViewModel()) {
+fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel = hiltViewModel()) {
+
+    val signUpFlow = viewModel.signUpFlow.collectAsState()
+
     Box(
         modifier = Modifier
             //.padding()
@@ -139,12 +148,36 @@ fun SignUpContent(viewModel: SignUpViewModel = hiltViewModel()) {
                         .fillMaxWidth()
                         .padding(vertical = 25.dp),
                     text = "REGISTRARSE",
-                    onClick = {  },
+                    onClick = { viewModel.onSignup() },
                     enabled = viewModel.isEnabledSignUpButton
                 )
             }
         }
 
+    }
+    signUpFlow.value.let {
+        when(it){
+            Response.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+            is Response.Success -> {
+                LaunchedEffect(Unit){
+                    navController.popBackStack(AppScreen.Login.route, true)
+                    navController.navigate(route = AppScreen.Profile.route)
+                }
+            }
+
+            is Response.Failure -> {
+                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> Log.d("SignUpContent", "SignUpContent Error: Error desconocido")
+        }
     }
 }
 
@@ -157,7 +190,7 @@ fun PreviewSignUpContent() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            SignUpContent()
+            SignUpContent(rememberNavController())
         }
     }
 }
