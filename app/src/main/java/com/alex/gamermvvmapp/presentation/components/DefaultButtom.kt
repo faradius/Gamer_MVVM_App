@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
 import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
@@ -23,13 +24,14 @@ fun DefaultButtom(
     text: String,
     onClick: ()->Unit,
     color: Color = Red500,
+    textColor: Color = Color.White,
     icon: ImageVector = Icons.Default.ArrowForward,
     enabled: Boolean = true
 ){
     Button(
         modifier = modifier,
         onClick = { onClick() },
-        colors = ButtonDefaults.buttonColors(backgroundColor = color),
+        colors = ButtonDefaults.buttonColors(backgroundColor = color, contentColor = textColor),
         enabled = enabled
     ) {
         Icon(
