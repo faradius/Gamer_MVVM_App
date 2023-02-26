@@ -40,7 +40,7 @@ import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 @Composable
 fun LoginContent(paddingValues: PaddingValues, navController: NavHostController,viewModel:LoginViewModel = hiltViewModel()) {
 
-    val loginFlow = viewModel.loginFlow.collectAsState()
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -91,12 +91,12 @@ fun LoginContent(paddingValues: PaddingValues, navController: NavHostController,
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 25.dp),
-                    value = viewModel.email.value,
-                    onValueChange = { viewModel.email.value = it},
+                    value = state.email,
+                    onValueChange = { viewModel.onEmailInput(it)},
                     label = "Correo Electrónico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg = viewModel.emailErrorMsg.value,
+                    errorMsg = viewModel.emailErrorMsg,
                     validateField = {
                         viewModel.validateEmail()
                     }
@@ -104,12 +104,12 @@ fun LoginContent(paddingValues: PaddingValues, navController: NavHostController,
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 5.dp),
-                    value = viewModel.password.value,
-                    onValueChange = { viewModel.password.value = it},
+                    value = state.password,
+                    onValueChange = { viewModel.onPasswordInput(it)},
                     label = "Contraseña",
                     icon = Icons.Default.Lock,
                     hideText = true,
-                    errorMsg = viewModel.passwordErrorMsg.value,
+                    errorMsg = viewModel.passwordErrorMsg,
                     validateField = {
                         viewModel.validatePassword()
                     }
@@ -122,41 +122,12 @@ fun LoginContent(paddingValues: PaddingValues, navController: NavHostController,
                     text = "INICIAR SESIÓN",
                     onClick = {
                         viewModel.login()
-                        Log.d("LoginContent", "Email: ${viewModel.email.value}")
-                        Log.d("LoginContent", "Password: ${viewModel.password.value}")
+                        Log.d("LoginContent", "Email: ${state.email}")
+                        Log.d("LoginContent", "Password: ${state.password}")
                     },
                     enabled = viewModel.isEnabledLoginButton
                 )
             }
-        }
-    }
-
-    loginFlow.value.let { it ->
-        when(it){
-            Response.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Response.Success -> {
-                //Esta corrutina es necesario por que se esta evaluando un estado en el loginFlow(loading, succes, failure),
-                //si se hace directo puede que el estado cambie y eso afectaria la navegación
-                LaunchedEffect(Unit){
-                    navController.navigate(route = AppScreen.Profile.route){
-                        //Permite borrar el historial de pantallas
-                        popUpTo(AppScreen.Login.route){
-                            inclusive = true
-                        }
-                    }
-                }
-            }
-            is Response.Failure -> {
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
-            }
-            else -> Log.d("LoginContent", "Error: Error desconocido")
         }
     }
 }
