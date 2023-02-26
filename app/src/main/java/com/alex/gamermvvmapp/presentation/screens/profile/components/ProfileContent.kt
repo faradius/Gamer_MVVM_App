@@ -30,7 +30,10 @@ import com.alex.gamermvvmapp.presentation.screens.profile.ProfileViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
 
 @Composable
-fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel()) {
+fun ProfileContent(
+    navController: NavHostController,
+    viewModel: ProfileViewModel = hiltViewModel()
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -86,7 +89,7 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             textColor = DarkGray500,
             icon = Icons.Default.Edit,
             onClick = {
-
+                navController.navigate(route = AppScreen.ProfileEdit.route)
             })
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -97,8 +100,8 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             icon = Icons.Default.ExitToApp,
             onClick = {
                 viewModel.logout()
-                navController.navigate(route = AppScreen.Login.route){
-                    popUpTo(AppScreen.Profile.route){ inclusive = true }
+                navController.navigate(route = AppScreen.Login.route) {
+                    popUpTo(AppScreen.Profile.route) { inclusive = true }
                 }
             })
 
