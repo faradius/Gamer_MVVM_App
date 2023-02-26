@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alex.gamermvvmapp.presentation.components.DefaultTopBar
-import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
+import com.alex.gamermvvmapp.presentation.screens.singup.components.SignUp
 import com.alex.gamermvvmapp.presentation.screens.singup.components.SignUpContent
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
@@ -32,6 +31,8 @@ fun SignUpScreen(navController: NavHostController){
         },
         bottomBar = { }
     )
+    
+    SignUp(navController = navController)
 }
 
 @Preview(showBackground = true, showSystemUi = true)

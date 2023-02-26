@@ -1,7 +1,5 @@
 package com.alex.gamermvvmapp.presentation.screens.singup.components
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,12 +10,9 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,13 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alex.gamermvvmapp.R
-import com.alex.gamermvvmapp.domain.model.Response
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.components.DefaultTextField
-import com.alex.gamermvvmapp.presentation.navigation.AppScreen
-import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
-import com.alex.gamermvvmapp.presentation.screens.login.LoginViewModel
-import com.alex.gamermvvmapp.presentation.screens.singup.SignUpScreen
 import com.alex.gamermvvmapp.presentation.screens.singup.SignUpViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
@@ -43,7 +33,7 @@ import com.alex.gamermvvmapp.presentation.ui.theme.Red500
 @Composable
 fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel = hiltViewModel()) {
 
-    val signUpFlow = viewModel.signUpFlow.collectAsState()
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -94,11 +84,11 @@ fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel =
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 25.dp),
-                    value = viewModel.username.value,
-                    onValueChange = { viewModel.username.value = it},
+                    value = state.username,
+                    onValueChange = { viewModel.onUsernameInput(it)},
                     label = "Nombre de Usuario",
                     icon = Icons.Default.Person,
-                    errorMsg = viewModel.usernameErrorMsg.value,
+                    errorMsg = viewModel.usernameErrorMsg,
                     validateField = {
                         viewModel.validateUsername()
                     }
@@ -106,12 +96,12 @@ fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel =
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.email.value,
-                    onValueChange = { viewModel.email.value = it},
+                    value = state.email,
+                    onValueChange = { viewModel.onEmailInput(it)},
                     label = "Correo Electrónico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg = viewModel.emailErrorMsg.value,
+                    errorMsg = viewModel.emailErrorMsg,
                     validateField = {
                         viewModel.validateEmail()
                     }
@@ -119,12 +109,12 @@ fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel =
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.password.value,
-                    onValueChange = { viewModel.password.value = it},
+                    value = state.password,
+                    onValueChange = { viewModel.onPasswordInput(it)},
                     label = "Contraseña",
                     icon = Icons.Default.Lock,
                     hideText = true,
-                    errorMsg = viewModel.passwordErrorMsg.value,
+                    errorMsg = viewModel.passwordErrorMsg,
                     validateField = {
                         viewModel.validatePassword()
                     }
@@ -132,12 +122,12 @@ fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel =
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.confirmPassword.value,
-                    onValueChange = { viewModel.confirmPassword.value = it},
+                    value = state.confirmPassword,
+                    onValueChange = { viewModel.onConfirmPasswordInput(it)},
                     label = "Confirmar Contraseña",
                     icon = Icons.Outlined.Lock,
                     hideText = true,
-                    errorMsg = viewModel.confirmPasswordErrorMsg.value,
+                    errorMsg = viewModel.confirmPasswordErrorMsg,
                     validateField = {
                         viewModel.validateConfirmPassword()
                     }
@@ -154,31 +144,6 @@ fun SignUpContent(navController: NavHostController ,viewModel: SignUpViewModel =
             }
         }
 
-    }
-    signUpFlow.value.let {
-        when(it){
-            Response.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Response.Success -> {
-                LaunchedEffect(Unit){
-                    viewModel.createUser()
-                    navController.popBackStack(AppScreen.Login.route, true)
-                    navController.navigate(route = AppScreen.Profile.route)
-                }
-            }
-
-            is Response.Failure -> {
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_SHORT).show()
-            }
-
-            else -> Log.d("SignUpContent", "SignUpContent Error: Error desconocido")
-        }
     }
 }
 

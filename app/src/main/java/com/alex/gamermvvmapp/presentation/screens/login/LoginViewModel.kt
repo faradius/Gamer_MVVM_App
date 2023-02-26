@@ -8,8 +8,6 @@ import com.alex.gamermvvmapp.domain.model.Response
 import com.alex.gamermvvmapp.domain.use_cases.auth.AuthUseCases
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,11 +18,15 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
     private set //ponemos esto para no poder cambiar su valor desde otras clases
 
     var isEmailValid:Boolean by mutableStateOf(false)
+    private set
     var emailErrorMsg:String by mutableStateOf("")
+    private set
 
 
     var isPasswordValid:Boolean by mutableStateOf(false)
+    private set
     var passwordErrorMsg:String by mutableStateOf("")
+    private set
 
     //ENABLE BUTTON
     var isEnabledLoginButton = false
