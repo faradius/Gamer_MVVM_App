@@ -6,7 +6,8 @@ data class User (
     var id: String = "",
     var username: String = "",
     var email: String = "",
-    var password: String = ""
+    var password: String = "",
+    var image: String = ""
 ){
     //Se transforma el objeto user a un json
     fun toJson(): String = Gson().toJson(this)

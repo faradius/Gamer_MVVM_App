@@ -9,5 +9,6 @@ interface UsersRepository {
 
     //Retorna boolean para saber si se creo
     suspend fun create(user: User): Response<Boolean>
+    suspend fun update(user: User): Response<Boolean>
     fun getUserById(id:String): Flow<User>
 }
