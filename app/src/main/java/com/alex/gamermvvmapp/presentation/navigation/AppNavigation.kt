@@ -36,7 +36,7 @@ fun AppNavigation(navController: NavHostController) {
             })
         ){
             it.arguments?.getString("user")?.let{
-                ProfileEditScreen(navController, user = it)
+                ProfileEditScreen(navController)
             }
 
         }
