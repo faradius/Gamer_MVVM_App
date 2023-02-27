@@ -1,5 +1,8 @@
 package com.alex.gamermvvmapp.presentation.screens.profile_edit
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -31,8 +34,21 @@ class ProfileEditViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    //IMAGE
+    var imageUri by mutableStateOf<Uri?>(null)
+    var hasImage by mutableStateOf(false)
+
     init {
         state = state.copy(username = user.username)
+    }
+
+    fun onCameraResult(result: Boolean){
+        hasImage = result
+    }
+
+    fun onGalleryResult(uri: Uri?){
+        hasImage = uri != null
+        imageUri = uri
     }
 
     fun onUpdate(){
