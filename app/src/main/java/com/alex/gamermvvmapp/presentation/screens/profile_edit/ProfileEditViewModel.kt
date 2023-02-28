@@ -34,17 +34,16 @@ class ProfileEditViewModel @Inject constructor(
     var usernameErrorMsg: String by mutableStateOf("")
         private set
 
+    //ARGUMENTS
     val data = savedStateHandle.get<String>("user")
     val user = User.fromJson(data!!)
 
+    //RESPONSE
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
         private set
-
-    //IMAGE
-    var imageUri by mutableStateOf("")
 
     //FILE
     var file: File? = null
@@ -52,7 +51,10 @@ class ProfileEditViewModel @Inject constructor(
     val resultingActivityHandler = ResultingActivityHandler()
 
     init {
-        state = state.copy(username = user.username)
+        state = state.copy(
+            username = user.username,
+            image = user.image
+        )
     }
 
     fun saveImage() = viewModelScope.launch {
@@ -69,7 +71,7 @@ class ProfileEditViewModel @Inject constructor(
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
             file = ComposeFileProvider.createFileFromUri(context, result)
-            imageUri = result.toString()
+            state = state.copy(image = result.toString())
         }
 
     }
@@ -78,8 +80,8 @@ class ProfileEditViewModel @Inject constructor(
     fun takePhoto() = viewModelScope.launch {
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
-            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
-            file = File(imageUri)
+            state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
+            file = File(state.image)
         }
     }
 

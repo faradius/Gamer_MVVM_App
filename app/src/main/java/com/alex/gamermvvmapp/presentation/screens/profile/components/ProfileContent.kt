@@ -2,6 +2,7 @@ package com.alex.gamermvvmapp.presentation.screens.profile.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,12 +24,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.alex.gamermvvmapp.R
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.navigation.AppScreen
 import com.alex.gamermvvmapp.presentation.screens.profile.ProfileViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProfileContent(
@@ -59,11 +64,21 @@ fun ProfileContent(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(55.dp))
-                Image(
-                    modifier = Modifier.size(115.dp),
-                    painter = painterResource(id = R.drawable.user),
-                    contentDescription = ""
-                )
+                if (viewModel.userData.image != ""){
+                    AsyncImage(
+                        modifier = Modifier.size(115.dp).clip(CircleShape),
+                        model = viewModel.userData.image,
+                        contentDescription = "User image",
+                        contentScale = ContentScale.Crop
+                    )
+                }else{
+                    Image(
+                        modifier = Modifier.size(115.dp),
+                        painter = painterResource(id = R.drawable.user),
+                        contentDescription = ""
+                    )
+                }
+
             }
         }
 

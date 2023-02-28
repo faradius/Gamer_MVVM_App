@@ -72,7 +72,7 @@ fun ProfileEditContent(
             ) {
                 Spacer(modifier = Modifier.height(30.dp))
 
-                if (viewModel.imageUri != "") {
+                if (viewModel.state.image != "") {
                     AsyncImage(
                         modifier = Modifier
                             .height(110.dp)
@@ -80,7 +80,7 @@ fun ProfileEditContent(
                             .clip(CircleShape)
                             .clickable { dialogState.value = true },
                         contentScale = ContentScale.Crop,
-                        model = viewModel.imageUri,
+                        model = viewModel.state.image,
                         contentDescription = "Selected image"
                     )
                 } else {
