@@ -51,16 +51,21 @@ class ProfileEditViewModel @Inject constructor(
     //Obtener imagen de galeria
     fun pickImage() = viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
-        imageUri = result.toString()
+        if (result != null) {
+            imageUri = result.toString()
+        }
+
     }
 
     //Tomar foto con la camara
     fun takePhoto() = viewModelScope.launch {
         val result = resultingActivityHandler.takePicturePreview()
-        imageUri = ComposeFileProvider.getPathFromBitmap(context, result!!)
+        if (result != null) {
+            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
+        }
     }
 
-    fun onUpdate(){
+    fun onUpdate() {
         val myUser = User(
             id = user.id,
             username = state.username,

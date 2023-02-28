@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +34,7 @@ import coil.compose.AsyncImage
 import com.alex.gamermvvmapp.R
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.components.DefaultTextField
+import com.alex.gamermvvmapp.presentation.components.DialogCapturePicture
 import com.alex.gamermvvmapp.presentation.screens.profile_edit.ProfileEditViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
 import com.alex.gamermvvmapp.presentation.ui.theme.Red500
@@ -44,6 +47,13 @@ fun ProfileEditContent(
 ) {
     val state = viewModel.state
     viewModel.resultingActivityHandler.handle()
+    var dialogState = remember{ mutableStateOf(false) }
+
+    DialogCapturePicture(
+        status = dialogState,
+        takePhoto = { viewModel.takePhoto() },
+        pickImage = { viewModel.pickImage() }
+    )
 
     Box(
         modifier = Modifier
@@ -67,7 +77,8 @@ fun ProfileEditContent(
                         modifier = Modifier
                             .height(110.dp)
                             .width(110.dp)
-                            .clip(CircleShape),
+                            .clip(CircleShape)
+                            .clickable { dialogState.value = true },
                         contentScale = ContentScale.Crop,
                         model = viewModel.imageUri,
                         contentDescription = "Selected image"
@@ -77,7 +88,7 @@ fun ProfileEditContent(
                         modifier = Modifier
                             .height(110.dp)
                             .clickable {
-                                viewModel.takePhoto()
+                                dialogState.value = true
                             },
                         painter = painterResource(id = R.drawable.user),
                         contentDescription = "Imagen de usuario"
