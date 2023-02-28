@@ -42,25 +42,8 @@ fun ProfileEditContent(
     navController: NavHostController,
     viewModel: ProfileEditViewModel = hiltViewModel()
 ) {
-
     val state = viewModel.state
-
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri ->
-            uri?.let { viewModel.onGalleryResult(it) }
-        }
-    )
-
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        onResult = { hasImage ->
-            viewModel.onCameraResult(hasImage)
-        }
-    )
-
-    val context = LocalContext.current
+    viewModel.resultingActivityHandler.handle()
 
     Box(
         modifier = Modifier
@@ -79,7 +62,7 @@ fun ProfileEditContent(
             ) {
                 Spacer(modifier = Modifier.height(30.dp))
 
-                if (viewModel.hasImage && viewModel.imageUri != null) {
+                if (viewModel.imageUri != "") {
                     AsyncImage(
                         modifier = Modifier
                             .height(110.dp)
@@ -94,10 +77,7 @@ fun ProfileEditContent(
                         modifier = Modifier
                             .height(110.dp)
                             .clickable {
-//                                imagePicker.launch("image/*")
-                                val uri = ComposeFileProvider.getImageUri(context)
-                                viewModel.imageUri = uri
-                                cameraLauncher.launch(uri)
+                                viewModel.takePhoto()
                             },
                         painter = painterResource(id = R.drawable.user),
                         contentDescription = "Imagen de usuario"

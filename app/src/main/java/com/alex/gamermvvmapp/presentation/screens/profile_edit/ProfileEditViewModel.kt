@@ -1,5 +1,6 @@
 package com.alex.gamermvvmapp.presentation.screens.profile_edit
 
+import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,14 +13,18 @@ import androidx.lifecycle.viewModelScope
 import com.alex.gamermvvmapp.domain.model.Response
 import com.alex.gamermvvmapp.domain.model.User
 import com.alex.gamermvvmapp.domain.use_cases.users.UsersUseCases
+import com.alex.gamermvvmapp.presentation.utils.ComposeFileProvider
+import com.alex.gamermvvmapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileEditViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val usersUseCases: UsersUseCases
+    private val usersUseCases: UsersUseCases,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     var state by mutableStateOf(ProfileEditState())
@@ -35,20 +40,24 @@ class ProfileEditViewModel @Inject constructor(
         private set
 
     //IMAGE
-    var imageUri by mutableStateOf<Uri?>(null)
-    var hasImage by mutableStateOf(false)
+    var imageUri by mutableStateOf("")
+
+    val resultingActivityHandler = ResultingActivityHandler()
 
     init {
         state = state.copy(username = user.username)
     }
 
-    fun onCameraResult(result: Boolean){
-        hasImage = result
+    //Obtener imagen de galeria
+    fun pickImage() = viewModelScope.launch {
+        val result = resultingActivityHandler.getContent("image/*")
+        imageUri = result.toString()
     }
 
-    fun onGalleryResult(uri: Uri?){
-        hasImage = uri != null
-        imageUri = uri
+    //Tomar foto con la camara
+    fun takePhoto() = viewModelScope.launch {
+        val result = resultingActivityHandler.takePicturePreview()
+        imageUri = ComposeFileProvider.getPathFromBitmap(context, result!!)
     }
 
     fun onUpdate(){
