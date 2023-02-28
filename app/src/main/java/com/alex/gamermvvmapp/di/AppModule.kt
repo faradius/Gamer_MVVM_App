@@ -6,15 +6,14 @@ import com.alex.gamermvvmapp.data.repository.UsersRepositoryImpl
 import com.alex.gamermvvmapp.domain.repository.AuthRepository
 import com.alex.gamermvvmapp.domain.repository.UsersRepository
 import com.alex.gamermvvmapp.domain.use_cases.auth.*
-import com.alex.gamermvvmapp.domain.use_cases.users.Create
-import com.alex.gamermvvmapp.domain.use_cases.users.GetUserById
-import com.alex.gamermvvmapp.domain.use_cases.users.Update
-import com.alex.gamermvvmapp.domain.use_cases.users.UsersUseCases
+import com.alex.gamermvvmapp.domain.use_cases.users.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +25,12 @@ object AppModule {
 
     @Provides
     fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    fun provideStorageUserRef(storage: FirebaseStorage): StorageReference = storage.reference.child(USERS)
 
     @Provides
     fun provideUsersRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS)
@@ -51,6 +56,7 @@ object AppModule {
     fun provideUsersUseCases(repository: UsersRepository) = UsersUseCases(
         create = Create(repository),
         getUserById = GetUserById(repository),
-        update = Update(repository)
+        update = Update(repository),
+        saveImage = SaveImage(repository)
     )
 }

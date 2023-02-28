@@ -18,6 +18,7 @@ import com.alex.gamermvvmapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,8 +40,14 @@ class ProfileEditViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    var saveImageResponse by mutableStateOf<Response<String>?>(null)
+        private set
+
     //IMAGE
     var imageUri by mutableStateOf("")
+
+    //FILE
+    var file: File? = null
 
     val resultingActivityHandler = ResultingActivityHandler()
 
@@ -48,10 +55,20 @@ class ProfileEditViewModel @Inject constructor(
         state = state.copy(username = user.username)
     }
 
+    fun saveImage() = viewModelScope.launch {
+        if(file != null){
+            saveImageResponse = Response.Loading
+            val result = usersUseCases.saveImage(file!!)
+            saveImageResponse = result
+        }
+
+    }
+
     //Obtener imagen de galeria
     fun pickImage() = viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
+            file = ComposeFileProvider.createFileFromUri(context, result)
             imageUri = result.toString()
         }
 
@@ -62,14 +79,15 @@ class ProfileEditViewModel @Inject constructor(
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
             imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
+            file = File(imageUri)
         }
     }
 
-    fun onUpdate() {
+    fun onUpdate(url: String) {
         val myUser = User(
             id = user.id,
             username = state.username,
-            image = ""
+            image = url
         )
         update(myUser)
     }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.alex.gamermvvmapp.presentation.components.DefaultTopBar
 import com.alex.gamermvvmapp.presentation.screens.profile_edit.components.ProfileEditContent
+import com.alex.gamermvvmapp.presentation.screens.profile_edit.components.SaveImage
 import com.alex.gamermvvmapp.presentation.screens.profile_edit.components.Update
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -26,6 +27,6 @@ fun ProfileEditScreen(
         },
         bottomBar = { }
     )
-
+    SaveImage()
     Update()
 }
