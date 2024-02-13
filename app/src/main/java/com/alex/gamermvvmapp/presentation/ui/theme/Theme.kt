@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 private val DarkColorPalette = darkColors(
     primary = Red500, //statusBar
     primaryVariant = Red700,
-    secondary = DarkGray700,
+    secondary = Color.White,
     background = DarkGray900,
     onPrimary = Color.White //Color de letra de botones
 )
