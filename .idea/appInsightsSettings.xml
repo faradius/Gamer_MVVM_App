@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.alex.gamermvvmapp" />
+                  <option name="mobileSdkAppId" value="1:1084027857317:android:6c172f9d297b4b626d204c" />
+                  <option name="projectId" value="gamer-mvvm-app-96b80" />
+                  <option name="projectNumber" value="1084027857317" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -1,4 +1,4 @@
-package com.alex.gamermvvmapp.presentation.navigation
+package com.alex.gamermvvmapp.presentation.navigation.graphs
 
 object Graph {
     const val ROOT = "root_graph"

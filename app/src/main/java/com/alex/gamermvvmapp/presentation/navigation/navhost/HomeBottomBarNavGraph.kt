@@ -1,9 +1,11 @@
-package com.alex.gamermvvmapp.presentation.navigation
+package com.alex.gamermvvmapp.presentation.navigation.navhost
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.alex.gamermvvmapp.presentation.navigation.graphs.Graph
+import com.alex.gamermvvmapp.presentation.navigation.routes.HomeBottomBarScreen
 import com.alex.gamermvvmapp.presentation.screens.my_posts.MyPostsScreen
 import com.alex.gamermvvmapp.presentation.screens.posts.PostsScreen
 import com.alex.gamermvvmapp.presentation.screens.profile.ProfileScreen
@@ -27,5 +29,7 @@ fun HomeBottomBarNavGraph(navController: NavHostController) {
         composable(route = HomeBottomBarScreen.Profile.route) {
             ProfileScreen(navController)
         }
+
+        detailNavGraph(navController = navController)
     }
 }

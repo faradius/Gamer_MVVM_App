@@ -8,7 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.alex.gamermvvmapp.presentation.navigation.RootNavGraph
+import com.alex.gamermvvmapp.presentation.navigation.navhost.RootNavGraph
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
