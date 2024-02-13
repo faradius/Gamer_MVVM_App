@@ -1,7 +1,6 @@
 package com.alex.gamermvvmapp.presentation.screens.login.components
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,12 +9,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,10 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.alex.gamermvvmapp.R
-import com.alex.gamermvvmapp.domain.model.Response
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
 import com.alex.gamermvvmapp.presentation.components.DefaultTextField
-import com.alex.gamermvvmapp.presentation.navigation.AppScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500

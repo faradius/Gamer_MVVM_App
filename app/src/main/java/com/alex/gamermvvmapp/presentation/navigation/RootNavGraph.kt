@@ -6,31 +6,32 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.alex.gamermvvmapp.presentation.screens.home.HomeScreen
 import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
 import com.alex.gamermvvmapp.presentation.screens.profile.ProfileScreen
 import com.alex.gamermvvmapp.presentation.screens.profile_edit.ProfileEditScreen
 import com.alex.gamermvvmapp.presentation.screens.singup.SignUpScreen
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun RootNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = AppScreen.Login.route
+        route = Graph.ROOT,
+        startDestination = Graph.AUTHENTICATION
     ){
-        composable(route = AppScreen.Login.route){
-            LoginScreen(navController)
+
+        authNavGraph(navController = navController)
+
+        composable(route = RootScreen.Home.route){
+            HomeScreen()
         }
 
-        composable(route = AppScreen.SignUp.route){
-            SignUpScreen(navController)
-        }
-
-        composable(route = AppScreen.Profile.route){
+        composable(route = AuthScreen.Profile.route){
             ProfileScreen(navController)
         }
 
         composable(
-            route = AppScreen.ProfileEdit.route,
+            route = AuthScreen.ProfileEdit.route,
             arguments = listOf(navArgument("user"){
                 type = NavType.StringType
             })

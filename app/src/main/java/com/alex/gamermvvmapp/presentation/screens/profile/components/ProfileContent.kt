@@ -28,11 +28,9 @@ import coil.compose.AsyncImage
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.alex.gamermvvmapp.R
 import com.alex.gamermvvmapp.presentation.components.DefaultButtom
-import com.alex.gamermvvmapp.presentation.navigation.AppScreen
+import com.alex.gamermvvmapp.presentation.navigation.AuthScreen
 import com.alex.gamermvvmapp.presentation.screens.profile.ProfileViewModel
 import com.alex.gamermvvmapp.presentation.ui.theme.DarkGray500
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProfileContent(
@@ -104,7 +102,7 @@ fun ProfileContent(
             textColor = DarkGray500,
             icon = Icons.Default.Edit,
             onClick = {
-                navController.navigate(route = AppScreen.ProfileEdit.passUser(viewModel.userData.toJson()))
+                navController.navigate(route = AuthScreen.ProfileEdit.passUser(viewModel.userData.toJson()))
             })
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -115,8 +113,8 @@ fun ProfileContent(
             icon = Icons.Default.ExitToApp,
             onClick = {
                 viewModel.logout()
-                navController.navigate(route = AppScreen.Login.route) {
-                    popUpTo(AppScreen.Profile.route) { inclusive = true }
+                navController.navigate(route = AuthScreen.Login.route) {
+                    popUpTo(AuthScreen.Profile.route) { inclusive = true }
                 }
             })
 

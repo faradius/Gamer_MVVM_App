@@ -8,8 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.alex.gamermvvmapp.presentation.navigation.AppNavigation
-import com.alex.gamermvvmapp.presentation.screens.login.LoginScreen
+import com.alex.gamermvvmapp.presentation.navigation.RootNavGraph
 import com.alex.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     navController = rememberNavController()
-                    AppNavigation(navController = navController)
+                    RootNavGraph(navController = navController)
                 }
             }
         }
